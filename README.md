@@ -77,6 +77,8 @@ python scripts/screenshots.py
 
 ## 截图
 
+界面按移动端微信与淘宝的常见视觉规范重做：使用接近原生的导航、气泡、卡片、间距和内联 SVG 图标；默认头像为原创几何插画，也可在「我」页上传替换。
+
 | 聊天 | 红包 | 商城 |
 |---|---|---|
 | ![聊天](docs/screenshots/02-chat.png) | ![红包](docs/screenshots/03-red-packet.png) | ![商城](docs/screenshots/05-shop-home.png) |

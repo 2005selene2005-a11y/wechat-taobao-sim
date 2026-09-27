@@ -193,12 +193,7 @@ async def sticker_upload(file: UploadFile = File(...), desc: str = Form('')):
 
 # ---------- 头像 ----------
 def _default_avatar(who):
-    name = C.USER_NAME if who == 'user' else C.AI_NAME
-    ch = name[:1] if not name[:1].isascii() else name[:2].upper()
-    bg = '#7b8fb5' if who == 'user' else '#e0925c'
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="{bg}"/>'
-            f'<text x="50" y="50" font-size="{54 if len(ch) == 1 else 38}" font-family="sans-serif" font-weight="600" fill="#fff" '
-            f'text-anchor="middle" dominant-baseline="central">{escape(ch)}</text></svg>')
+    return (C.STATIC_DIR / f'avatar-{who}.svg').read_text(encoding='utf-8')
 
 
 @router.get('/api/avatar/{who}')
