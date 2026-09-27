@@ -63,6 +63,8 @@ def system_prompt():
 # ---------- 历史 ----------
 def _describe(m):
     k, mine = m['kind'], m['sender'] == 'ai'
+    if k == 'sys' and m['status'] == 'hidden':
+        return m['text']
     if k == 'text':
         return m['text']
     if k == 'sticker':
@@ -86,7 +88,7 @@ def _describe(m):
 
 def history(limit=None):
     limit = limit or C.HISTORY_LIMIT
-    rows = db.conn().execute("SELECT * FROM msgs WHERE kind!='sys' ORDER BY id DESC LIMIT ?", (limit,)).fetchall()[::-1]
+    rows = db.conn().execute("SELECT * FROM msgs WHERE kind!='sys' OR status='hidden' ORDER BY id DESC LIMIT ?", (limit,)).fetchall()[::-1]
     out = []
     for m in rows:
         if m['status'] == 'recalled':

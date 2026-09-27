@@ -28,10 +28,18 @@ def main():
         page.screenshot(path=out / '05-shop-home.png')
         page.locator('.item').first.click(); page.wait_for_timeout(400)
         page.screenshot(path=out / '06-product-detail.png')
+        page.goto(a.base + '/moments'); page.wait_for_timeout(500)
+        page.screenshot(path=out / '07-moments.png')
+        page.goto(a.base + '/wx'); page.wait_for_timeout(400)
+        page.locator('#home .contact .avatar').click(); page.wait_for_timeout(400)
+        page.screenshot(path=out / '08-profile.png')
+        page.goto(a.base + '/wx'); page.wait_for_timeout(400)
+        page.locator('#home .tab').last.click(); page.locator('#mine .setting').first.click(); page.wait_for_timeout(400)
+        page.screenshot(path=out / '09-profile-me.png')
         b.close()
     if errors:
         raise SystemExit('页面脚本错误: ' + '; '.join(errors))
-    print(f'已生成 6 张截图：{out}')
+    print(f'已生成 9 张截图：{out}')
 
 
 if __name__ == '__main__':

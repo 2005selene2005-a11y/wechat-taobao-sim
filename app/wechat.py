@@ -61,6 +61,12 @@ def state():
             'avatar_v': {w: db.kv_get('avatar_v:' + w, '0') for w in ('user', 'ai')}}
 
 
+@router.get('/api/wx/profile')
+def profile():
+    return {'user': {'wxid': C.USER_WXID, 'region': C.USER_REGION},
+            'ai': {'wxid': C.AI_WXID, 'region': C.AI_REGION}}
+
+
 @router.post('/api/wx/seen')
 def seen():
     r = db.conn().execute('SELECT max(id) FROM msgs').fetchone()[0] or 0
@@ -71,7 +77,7 @@ def seen():
 @router.get('/api/wx/feed')
 def feed(n: int = 500):
     wallet.expire_old()
-    rows = db.conn().execute("SELECT * FROM msgs WHERE status!='deleted' ORDER BY id DESC LIMIT ?", (n,)).fetchall()[::-1]
+    rows = db.conn().execute("SELECT * FROM msgs WHERE status NOT IN ('deleted','hidden') ORDER BY id DESC LIMIT ?", (n,)).fetchall()[::-1]
     return _expand(rows)
 
 
@@ -79,7 +85,7 @@ def feed(n: int = 500):
 def poll(since: int = 0):
     wallet.expire_old()
     c = db.conn()
-    rows = _expand(c.execute('SELECT * FROM msgs WHERE id>? ORDER BY id LIMIT 50', (since,)).fetchall())
+    rows = _expand(c.execute("SELECT * FROM msgs WHERE id>? AND status!='hidden' ORDER BY id LIMIT 50", (since,)).fetchall())
     gone = [{'id': r['id'], 'status': r['status'], 'sender': r['sender']} for r in c.execute(
         "SELECT id,status,sender FROM msgs WHERE status IN ('recalled','deleted') AND id>?", (max(0, since - 200),))]
     return {'msgs': rows, 'typing': ai.typing(), 'gone': gone}

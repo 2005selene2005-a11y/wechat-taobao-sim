@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """给截图或本地体验加入一组普通朋友闲聊演示数据。可重复运行。"""
+import json
 import os
 import sys
 from pathlib import Path
@@ -25,9 +26,13 @@ def main():
     shop.ai_gift('桌面暖光小夜灯', '看到它就想起轻松的夜晚')
     db.add_msg('user', 'product', '', 1)
     db.add_msg('ai', 'text', '这个看起来很实用，颜色也很清爽。')
+    c.execute('INSERT INTO moments(ts,author,text,imgs_json,loc) VALUES(?,?,?,?,?)',
+              (db.now(), 'ai', '下午适合慢下来，喝杯热茶。', json.dumps([]), '咖啡店'))
+    c.execute('INSERT INTO moments(ts,author,text,imgs_json,loc) VALUES(?,?,?,?,?)',
+              (db.now(), 'user', '整理好书桌，窗边的阳光刚刚好。', json.dumps([]), '家'))
     db.kv_set('demo_seeded', '1')
     c.commit()
-    print('演示数据已写入')
+    print('演示数据已写入（含朋友圈）')
 
 
 if __name__ == '__main__':

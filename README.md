@@ -6,6 +6,8 @@
 
 - 聊天列表和会话气泡、输入状态、两分钟内撤回、单边删除、图片与可上传表情
 - 可更换双方头像；图片均存于本机数据目录
+- 朋友圈：多图动态、定位、赞评、回复、封面与 AI 自动互动/发布
+- 联系人与个人资料页，可快速查看双方最近动态
 - 红包、转账、零钱和账单；红包支持领取动画、过期退款与限额
 - 77 件原创占位商品，支持分类、搜索、详情、收藏接口、购物车、订单和确认收货
 - 商品分享到聊天；AI 可加购并发送礼物卡
@@ -41,6 +43,10 @@ python run.py
 | `PACKET_MAX_SINGLE` / `AI_DAILY_LIMIT` | 单笔与 AI 每日红包/转账上限 |
 | `AI_GIFT_DAILY_LIMIT` / `AI_GIFT_MAX_PRICE` | AI 每日送礼件数与单价上限 |
 | `AI_RECALL_RETYPE` | AI 是否可能撤回后重发，默认关闭 |
+| `USER_WXID` / `AI_WXID` | 资料页显示的示例账号 |
+| `USER_REGION` / `AI_REGION` | 资料页地区，默认“未设置” |
+| `MOMENT_REACT_DELAY_MIN/MAX` | AI 看到用户动态后的互动延迟秒数 |
+| `MOMENT_AI_POSTS_PER_DAY` | AI 每天自动发布上限，0 为关闭 |
 
 改初始余额只对新数据目录生效。需要重置时请停止服务后自行移走 `DATA_DIR`。
 
@@ -74,6 +80,10 @@ python scripts/screenshots.py
 | 聊天 | 红包 | 商城 |
 |---|---|---|
 | ![聊天](docs/screenshots/02-chat.png) | ![红包](docs/screenshots/03-red-packet.png) | ![商城](docs/screenshots/05-shop-home.png) |
+
+| 朋友圈 | AI 资料 | 我的资料 |
+|---|---|---|
+| ![朋友圈](docs/screenshots/07-moments.png) | ![AI 资料](docs/screenshots/08-profile.png) | ![我的资料](docs/screenshots/09-profile-me.png) |
 
 ## 免责声明
 

@@ -23,6 +23,10 @@ CREATE TABLE IF NOT EXISTS foot(id INTEGER PRIMARY KEY, ts TEXT, item_id INT);
 CREATE TABLE IF NOT EXISTS orders(id INTEGER PRIMARY KEY, ts TEXT, item_id INT, title TEXT, price REAL, qty INT DEFAULT 1,
     status TEXT, buyer TEXT, gift INT DEFAULT 0, msg TEXT, done_at TEXT);
 CREATE INDEX IF NOT EXISTS idx_msgs_read ON msgs(sender, read_at);
+CREATE TABLE IF NOT EXISTS moments(id INTEGER PRIMARY KEY, ts TEXT, author TEXT, text TEXT, imgs_json TEXT, loc TEXT, status TEXT DEFAULT 'ok');
+CREATE TABLE IF NOT EXISTS moment_likes(mid INT, who TEXT, ts TEXT, PRIMARY KEY(mid,who));
+CREATE TABLE IF NOT EXISTS moment_comments(id INTEGER PRIMARY KEY, mid INT, who TEXT, text TEXT, reply_to TEXT, ts TEXT, status TEXT DEFAULT 'ok');
+CREATE TABLE IF NOT EXISTS moment_jobs(id INTEGER PRIMARY KEY, mid INT, kind TEXT, due TEXT, round INT DEFAULT 1, status TEXT DEFAULT 'pending');
 '''
 
 
